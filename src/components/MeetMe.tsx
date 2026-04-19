@@ -2,7 +2,8 @@ import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment, Center } from "@react-three/drei";
 import * as THREE from "three";
-import modelPath from "@/assets/3d-model/base_basic_shaded.glb?url";
+
+const modelPath = "/3d-model/base_basic_shaded.glb";
 
 function Model() {
   const { scene } = useGLTF(modelPath);
