@@ -1,25 +1,34 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import path from "node:path";
 import tailwindcss from "@tailwindcss/vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import { nitro } from "nitro/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { tanstackStart } from "@tanstack/react-start/vite";
 
 export default defineConfig({
   plugins: [
-    tanstackStart({
-      // Tells Nitro (the underlying server engine) to emit Vercel output.
-      // You can also set NITRO_PRESET=vercel in the Vercel dashboard instead.
-      server: {
-        preset: "vercel",
-      },
-    }),
-    react(),
     tailwindcss(),
-    tsconfigPaths(),
+    tsconfigPaths({ projects: ["./tsconfig.json"] }),
+    tanstackStart(),
+    nitro(),
+    react(),
   ],
   resolve: {
     alias: {
-      "@": "/src",
+      "@": path.resolve(__dirname, "src"),
     },
+    dedupe: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "@tanstack/react-query",
+      "@tanstack/query-core",
+    ],
+  },
+  server: {
+    host: "::",
+    port: 8080,
   },
 });

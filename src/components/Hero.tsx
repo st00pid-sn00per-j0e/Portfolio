@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { Github, Linkedin, Mail, ArrowDown, Sparkles, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useParallaxLayer } from "@/hooks/useParallax";
+import heroBack from "@/assets/Generated Image April 19, 2026 - 12_28AM.png";
+import heroMid from "@/assets/Generated Image April 19, 2026 - 12_29AM.png";
+import heroFront from "@/assets/Generated_Image_April_18__2026_-_11_29PM-removebg-preview.png";
 
 const ROLES = [
   "Software Developer",
@@ -59,7 +62,7 @@ export function Hero() {
         className="parallax-layer absolute inset-0 z-10"
       >
         <img
-src="/src/assets/Generated Image April 19, 2026 - 12_28AM.png"
+src={heroBack}
           alt=""
 className="absolute inset-0 w-full h-full object-cover opacity-60"
           style={{ width: '100vw', height: '100vh' }}
@@ -72,7 +75,7 @@ className="absolute inset-0 w-full h-full object-cover opacity-60"
         className="parallax-layer absolute inset-0 z-20"
       >
         <img
-src="/src/assets/Generated Image April 19, 2026 - 12_29AM.png"
+src={heroMid}
           alt=""
 className="absolute inset-0 w-full h-full object-cover opacity-80"
           style={{ width: '100vw', height: '100vh' }}
@@ -85,7 +88,7 @@ className="absolute inset-0 w-full h-full object-cover opacity-80"
         className="parallax-layer absolute inset-0 z-30"
       >
         <img
-src="/src/assets/Generated_Image_April_18__2026_-_11_29PM-removebg-preview.png"
+src={heroFront}
           alt=""
 className="absolute inset-0 w-full h-full object-cover opacity-100"
           style={{ width: '100vw', height: '100vh' }}

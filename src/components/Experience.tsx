@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Briefcase, GraduationCap, Award, Rocket } from "lucide-react";
+import limeLogo from "@/assets/lime_software_logics_logo.jpg";
+import texasJasmineLogo from "@/assets/texas jasmine.jpg";
+import minsoftLogo from "@/assets/minsoft.jpg";
 
 const items = [
   {
@@ -7,7 +10,7 @@ const items = [
     icon: Briefcase,
     title: "Automation Engineer",
     org: "Lime Software Logics · Full-time · Bahria Towers Tariq Road · Karachi Division, Sindh, Pakistan · On-site",
-    logo: "/src/assets/lime_software_logics_logo.jpg",
+    logo: limeLogo,
     description: "Automation Engineer at Lime Software Logics.",
     tags: ["Automation", "Python", "Selenium", "Playwright", "CI/CD"],
   },
@@ -16,7 +19,7 @@ const items = [
     icon: Briefcase,
     title: "Monitoring And Evaluation Officer",
     org: "Texas Jasmine Wholesale · Full-time · Texas, United States · Remote",
-    logo: "/src/assets/texas jasmine.jpg",
+    logo: texasJasmineLogo,
     description:
       "To provide ongoing feedback to managers and guide real-time management decisions to ensure the project stays on track.",
     tags: ["Monitoring", "Evaluation", "Management"],
@@ -26,7 +29,7 @@ const items = [
     icon: Briefcase,
     title: "Python Developer",
     org: "Minsoft Technologies · Full-time · WeWork Office At Shahrah E Faisal · Karachi Division, Sindh, Pakistan · On-site",
-    logo: "/src/assets/minsoft.jpg",
+    logo: minsoftLogo,
     description: "Python Developer at Minsoft Technologies.",
     tags: ["Python"],
   },
