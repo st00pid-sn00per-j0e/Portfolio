@@ -1,10 +1,1 @@
-# LinkedIn Update Task
-
-## Steps:
-- [x] Step 1: Create this TODO.md file
-- [x] Step 2: Update LinkedIn URLs in Hero.tsx to new profile
-- [x] Step 3: Verify Footer.tsx (already correct)
-- [ ] Step 3: Verify Footer.tsx (already correct)
-- [ ] Step 4: Test the site locally
-- [ ] Step 5: Mark complete and cleanup TODO.md if desired
-
+# GitHub Pages Deployment\n\n- [x] 1. Edit vite.config.ts to set base: '/Portfolio/'\n- [x] 2. Edit package.json to add deploy scripts\n- [x] 3. Install gh-pages: npm install -D gh-pages\n- [ ] 4. Commit and push changes: git add . && git commit -m \"Add GitHub Pages deploy config\" && git push\n- [ ] 5. Deploy: npm run deploy\n- [ ] 6. Verify live site: https://st00pid-sn00per-j0e.github.io/Portfolio
