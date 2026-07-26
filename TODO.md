@@ -3,33 +3,33 @@
 ## ✅ Completed
 - [x] Full analysis of the portfolio project
 - [x] Created GitHub Actions workflow (`.github/workflows/deploy.yml`) for auto-deployment to Vercel on every push to `main`
+- [x] Responsive design fix push triggered deployment workflow
+- [x] Workflow updated with hardcoded VERCEL_ORG_ID and VERCEL_PROJECT_ID
 
-## ⏳ Required: GitHub Secrets Setup
+## ⏳ Last Step: Add VERCEL_TOKEN Secret
 
-The workflow needs 3 secrets added to your GitHub repository. You'll need to get these from Vercel:
+The workflow is ready. It only needs one secret on GitHub:
 
-### 1. VERCEL_TOKEN
+### VERCEL_TOKEN
 1. Go to https://vercel.com/account/tokens
 2. Create a new token (name it e.g. "GitHub Actions")
-3. Copy the token
+3. Copy the token value
+4. Go to https://github.com/st00pid-sn00per-j0e/Portfolio/settings/secrets/actions
+5. Click "New repository secret"
+6. Name: `VERCEL_TOKEN`, Value: (paste the token you just created)
 
-### 2. VERCEL_ORG_ID
-1. Go to https://vercel.com, open your team/account
-2. Run: `npx vercel whoami` or check your Vercel dashboard URL for the team slug
+> **Note:** VERCEL_ORG_ID and VERCEL_PROJECT_ID are already hardcoded in the workflow file, so you only need VERCEL_TOKEN.
 
-### 3. VERCEL_PROJECT_ID
-1. Go to your Vercel project dashboard
-2. The Project ID is in the project settings page
+## ✅ Once VERCEL_TOKEN is added
+Every time you push to `main`, the workflow will:
+1. ✅ Checkout the code
+2. ✅ Install dependencies (`npm ci`)
+3. ✅ Pull Vercel environment
+4. ✅ Build the project
+5. ✅ Deploy to Vercel production
 
-### How to add secrets to GitHub:
-1. Go to https://github.com/st00pid-sn00per-j0e/Portfolio/settings/secrets/actions
-2. Click "New repository secret"
-3. Add each of the three secrets above
-
-## ✅ Once secrets are added
-Every time you push to `main`, the GitHub Actions workflow will:
-1. Checkout the code
-2. Install dependencies
-3. Build the project
-4. Deploy to Vercel
+### To test it immediately:
+```bash
+git add -A && git commit -m "test deployment" && git push
+```
 
