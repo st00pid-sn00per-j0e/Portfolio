@@ -143,9 +143,9 @@ export const Certificates: React.FC = () => {
     <section 
       ref={containerRef} 
       className="relative w-full z-20"
-      style={{ height: '350vh' }}
+      style={{ height: '300vh' }}
     >
-      <div className="sticky top-0 h-[100vh] w-full overflow-hidden flex flex-col justify-center pt-24 pb-12">
+      <div className="sticky top-0 h-[100vh] w-full overflow-hidden flex flex-col justify-center pt-20 md:pt-24 pb-8 md:pb-12">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
 
         <div className="relative w-full text-center z-10 flex-shrink-0 mb-8 md:mb-12">

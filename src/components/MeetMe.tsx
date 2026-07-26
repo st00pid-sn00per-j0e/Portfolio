@@ -42,7 +42,7 @@ function LoadingSpinner() {
 
 export function MeetMe() {
   return (
-    <section id="meet-me" className="relative py-32 px-6 overflow-hidden">
+    <section id="meet-me" className="relative py-20 md:py-32 px-4 sm:px-6 overflow-hidden">
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36rem] h-[36rem] rounded-full bg-primary/10 blur-[160px] pointer-events-none" />
 

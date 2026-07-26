@@ -27,12 +27,12 @@ export function Nav() {
         <a href="#" className="px-4 font-bold text-gradient text-sm whitespace-nowrap">
           SBN<span className="text-muted-foreground/60 font-mono">.dev</span>
         </a>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5 md:gap-1">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="px-3 py-1.5 rounded-full text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+              className="px-2 md:px-3 py-1.5 rounded-full text-[10px] md:text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
             >
               {l.label}
             </a>

@@ -9,7 +9,7 @@ const stats = [
 
 export function About() {
   return (
-    <section id="about" className="relative py-32 px-6">
+    <section id="about" className="relative py-20 md:py-32 px-4 sm:px-6">
       <div className="container mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 items-center">
           {/* Avatar visual */}
@@ -67,15 +67,15 @@ fine-tuning domain-specific transformers like my LEGAL-BERT model with RAG pipel
               </p>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mt-8 sm:mt-10">
               {stats.map((s) => (
                 <div
                   key={s.label}
-                  className="glass rounded-2xl p-5 text-center hover:border-primary/50 transition-all hover:-translate-y-1"
+                  className="glass rounded-2xl p-4 sm:p-5 text-center hover:border-primary/50 transition-all hover:-translate-y-1"
                 >
-                  <s.icon className="w-6 h-6 mx-auto mb-2 text-primary" />
-                  <div className="text-2xl md:text-3xl font-bold text-gradient mb-1">{s.value}</div>
-                  <div className="text-[10px] md:text-xs text-muted-foreground font-mono uppercase tracking-wider">{s.label}</div>
+                  <s.icon className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-2 text-primary" />
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient mb-1">{s.value}</div>
+                  <div className="text-[9px] sm:text-[10px] md:text-xs text-muted-foreground font-mono uppercase tracking-wider">{s.label}</div>
                 </div>
               ))}
             </div>

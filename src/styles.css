@@ -223,6 +223,40 @@
   }
 }
 
+/* ── Mobile-specific responsive overrides ─────────────────────────────── */
+
+/* Prevent horizontal overflow on very small devices */
+@media (max-width: 380px) {
+  html {
+    font-size: 14px;
+  }
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Disable 3D tilt effects on touch devices (they interfere with scrolling) */
+@media (hover: none) and (pointer: coarse) {
+  .group {
+    transform: none !important;
+    perspective: none !important;
+  }
+  [style*="perspective"] {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Better touch scrolling for certificates section */
+.certificates-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.certificates-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }

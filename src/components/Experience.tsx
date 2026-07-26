@@ -156,7 +156,7 @@ export function Experience() {
   };
 
   return (
-    <section id="experience" className="relative py-32 px-6">
+    <section id="experience" className="relative py-20 md:py-32 px-4 sm:px-6">
       <div className="container mx-auto max-w-5xl">
         <div className="text-center mb-16">
           <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// Journey</p>

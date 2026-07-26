@@ -135,34 +135,34 @@ className="absolute inset-0 w-full h-full object-cover opacity-100"
           <Sparkles className="w-3.5 h-3.5 text-accent" />
         </div>
 
-        <h1 className="text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tight mb-6 leading-[0.95]">
+        <h1 className="text-[2.5rem] sm:text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tight mb-4 md:mb-6 leading-[0.95]">
           <span className="block text-foreground">Syed Bilal</span>
           <span className="block">
             <span className="text-gradient">Hussain Nizami</span>
           </span>
         </h1>
 
-        <p className="text-2xl md:text-3xl font-serif italic text-muted-foreground max-w-2xl mx-auto mb-3 min-h-[2.5rem]">
+        <p className="text-xl sm:text-2xl md:text-3xl font-serif italic text-muted-foreground max-w-2xl mx-auto mb-2 md:mb-3 min-h-[2rem] md:min-h-[2.5rem]">
           <span className="text-foreground/90">{role}</span>
-          <span className="inline-block w-[3px] h-7 md:h-8 bg-primary ml-1 align-middle animate-blink" />
+          <span className="inline-block w-[3px] h-6 md:h-8 bg-primary ml-1 align-middle animate-blink" />
         </p>
-        <p className="text-base md:text-lg text-muted-foreground/70 max-w-xl mx-auto mb-12 font-mono text-sm">
+        <p className="text-sm sm:text-base md:text-lg text-muted-foreground/70 max-w-xl mx-auto mb-8 md:mb-12 font-mono">
           React · Node.js · Python · TypeScript · LangChain · Hugging Face
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
-          <Button asChild size="lg" variant="hero">
+        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12 md:mb-16">
+          <Button asChild size="default" className="sm:size-lg" variant="hero">
             <a href="#contact">
               <Mail className="w-4 h-4" />
               Get In Touch
             </a>
           </Button>
-          <Button asChild size="lg" variant="outline-glow">
+          <Button asChild size="default" className="sm:size-lg" variant="outline-glow">
             <a href="#projects">
               View Projects
             </a>
           </Button>
-          <Button asChild size="lg" variant="ghost" className="rounded-full">
+          <Button asChild size="default" className="sm:size-lg rounded-full" variant="ghost">
             <a href="https://huggingface.co/Nizami98/LEGAL-BERT-By-Nizami" target="_blank" rel="noreferrer">
               <Download className="w-4 h-4" />
               LEGAL-BERT

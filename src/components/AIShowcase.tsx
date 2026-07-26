@@ -26,7 +26,7 @@ const supportingDocument = {
 
 export function AIShowcase() {
   return (
-    <section id="ai" className="relative overflow-hidden px-6 py-32">
+    <section id="ai" className="relative overflow-hidden px-4 sm:px-6 py-20 md:py-32">
       <div className="absolute top-1/2 left-0 h-96 w-96 -translate-y-1/2 rounded-full bg-accent/10 blur-[120px]" />
       <div className="absolute top-1/2 right-0 h-96 w-96 -translate-y-1/2 rounded-full bg-primary/10 blur-[120px]" />
 
