@@ -30,5 +30,8 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+    watch: {
+      ignored: ["**/.output/**", "**/node_modules/**"],
+    },
   },
 });

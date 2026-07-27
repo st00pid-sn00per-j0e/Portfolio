@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { AnimatedText } from "@/components/AnimatedText";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 
 const contacts = [
   { icon: Mail, label: "Email", value: "billyxkhan98@gmail.com", href: "mailto:billyxkhan98@gmail.com" },
@@ -31,9 +34,12 @@ export function Contact() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// Get In Touch</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Let's build something <span className="text-gradient">amazing</span>
-          </h2>
+          <AnimatedText className="text-4xl md:text-5xl font-bold mb-4">
+            Let's build something{" "}
+            <TextManager effect="scramble">
+              <ScrambleText text="amazing" className="text-gradient" />
+            </TextManager>
+          </AnimatedText>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Got a project in mind? I'm always open to discussing new opportunities.
           </p>

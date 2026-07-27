@@ -9,6 +9,9 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import fypRecommendationLetterPdf from "@/assets/DOC-20251111-WA0032..pdf";
+import { AnimatedText } from "@/components/AnimatedText";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 
 const features = [
   { icon: Cpu, label: "Base Model", value: "LEGAL-BERT" },
@@ -35,9 +38,12 @@ export function AIShowcase() {
           <p className="mb-4 font-mono text-sm tracking-widest text-accent uppercase">
             // Featured Model
           </p>
-          <h2 className="mb-4 text-4xl font-bold md:text-5xl">
-            Fine-tuning <span className="text-gradient">domain intelligence</span>
-          </h2>
+          <AnimatedText className="mb-4 text-4xl font-bold md:text-5xl">
+            Fine-tuning{" "}
+            <TextManager effect="scramble">
+              <ScrambleText text="domain intelligence" className="text-gradient" />
+            </TextManager>
+          </AnimatedText>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             A transformer model specialized for legal text understanding, published openly on
             Hugging Face with an attached recommendation letter for the final year project.

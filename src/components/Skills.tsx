@@ -1,4 +1,7 @@
 import { useRef } from "react";
+import { AnimatedText } from "@/components/AnimatedText";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 
 const skills = [
   { name: "React.js", level: 95, icon: "⚛️" },
@@ -42,9 +45,12 @@ export function Skills() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// Tech Stack</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Tools I <span className="text-gradient">build with</span>
-          </h2>
+          <AnimatedText className="text-4xl md:text-5xl font-bold mb-4">
+            Tools I{" "}
+            <TextManager effect="scramble">
+              <ScrambleText text="build with" className="text-gradient" />
+            </TextManager>
+          </AnimatedText>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Core engineering stack plus the AI & ML systems I ship in production.
           </p>

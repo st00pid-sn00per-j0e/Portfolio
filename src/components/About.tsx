@@ -1,5 +1,8 @@
 import { Code2, Sparkles, Rocket, Github } from "lucide-react";
 import avatarImg from "@/assets/avatar-abstract.jpeg";
+import { AnimatedText } from "@/components/AnimatedText";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 
 const stats = [
   { icon: Code2, label: "Years Building", value: "3+" },
@@ -42,10 +45,12 @@ export function About() {
           {/* Bio */}
           <div>
             <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// About Me</p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+            <AnimatedText className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
               Building the future with{" "}
-              <span className="font-serif italic text-gradient">code & intelligence</span>
-            </h2>
+              <TextManager effect="scramble">
+                <ScrambleText text="code & intelligence" className="font-serif italic text-gradient" />
+              </TextManager>
+            </AnimatedText>
             <div className="space-y-5 text-muted-foreground text-lg leading-relaxed">
               <p>
                 I'm a passionate full-stack developer specializing in modern web technologies and applied AI.

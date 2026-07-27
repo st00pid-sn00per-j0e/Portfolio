@@ -9,6 +9,7 @@ import { About } from "@/components/About";
 import { MeetMe } from "@/components/MeetMe";
 import { Skills } from "@/components/Skills";
 import { AIShowcase } from "@/components/AIShowcase";
+import { LexiGuard } from "@/components/LexiGuard";
 import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
 import { Certificates } from "@/components/Certificates";
@@ -48,6 +49,7 @@ function Index() {
         <MeetMe />
         <Skills />
         <AIShowcase />
+        <LexiGuard />
         <Projects />
         <Experience />
         <Certificates />

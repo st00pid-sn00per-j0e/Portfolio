@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Github, Linkedin, Mail, ArrowDown, Sparkles, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useParallaxLayer } from "@/hooks/useParallax";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 import heroBack from "@/assets/Generated Image April 19, 2026 - 12_28AM.png";
 import heroMid from "@/assets/Generated Image April 19, 2026 - 12_29AM.png";
 import heroFront from "@/assets/Generated_Image_April_18__2026_-_11_29PM-removebg-preview.png";
@@ -136,9 +138,15 @@ className="absolute inset-0 w-full h-full object-cover opacity-100"
         </div>
 
         <h1 className="text-[2.5rem] sm:text-5xl md:text-7xl lg:text-[6.5rem] font-bold tracking-tight mb-4 md:mb-6 leading-[0.95]">
-          <span className="block text-foreground">Syed Bilal</span>
+          <span className="block text-foreground">
+            <TextManager effect="scramble">
+              <ScrambleText text="Syed Bilal" />
+            </TextManager>
+          </span>
           <span className="block">
-            <span className="text-gradient">Hussain Nizami</span>
+            <TextManager effect="scramble">
+              <ScrambleText text="Hussain Nizami" className="text-gradient" speed={42} />
+            </TextManager>
           </span>
         </h1>
 

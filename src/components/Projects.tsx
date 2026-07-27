@@ -3,6 +3,9 @@ import aiDashboard from "@/assets/project-ai-dashboard.jpg";
 import legalBert from "@/assets/project-legal-bert.jpg";
 import ecommerce from "@/assets/project-ecommerce.jpg";
 import portfolio from "@/assets/project-portfolio.jpg";
+import { AnimatedText } from "@/components/AnimatedText";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 
 const projects = [
   {
@@ -42,9 +45,12 @@ export function Projects() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// Selected Work</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Recent <span className="font-serif italic text-gradient">projects</span>
-          </h2>
+          <AnimatedText className="text-4xl md:text-5xl font-bold mb-4">
+            Recent{" "}
+            <TextManager effect="scramble">
+              <ScrambleText text="projects" className="font-serif italic text-gradient" />
+            </TextManager>
+          </AnimatedText>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Production-ready applications and research showcasing the modern stack.
           </p>

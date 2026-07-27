@@ -3,15 +3,18 @@ import { Briefcase, GraduationCap, Award, Rocket } from "lucide-react";
 import limeLogo from "@/assets/lime_software_logics_logo.jpg";
 import texasJasmineLogo from "@/assets/texas jasmine.jpg";
 import minsoftLogo from "@/assets/minsoft.jpg";
+import { AnimatedText } from "@/components/AnimatedText";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 
 const items = [
   {
     year: "Nov 2025 - Present",
     icon: Briefcase,
-    title: "Automation Engineer",
+    title: "Associate Software Engineer",
     org: "Lime Software Logics · Full-time · Bahria Towers Tariq Road · Karachi Division, Sindh, Pakistan · On-site",
     logo: limeLogo,
-    description: "Automation Engineer at Lime Software Logics.",
+    description: "Associate Software Engineer at Lime Software Logics.",
     tags: ["Automation", "Python", "Selenium", "Playwright", "CI/CD"],
   },
   {
@@ -160,9 +163,12 @@ export function Experience() {
       <div className="container mx-auto max-w-5xl">
         <div className="text-center mb-16">
           <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// Journey</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Experience & <span className="font-serif italic text-gradient">milestones</span>
-          </h2>
+          <AnimatedText className="text-4xl md:text-5xl font-bold mb-4">
+            Experience &{" "}
+            <TextManager effect="scramble">
+              <ScrambleText text="milestones" className="font-serif italic text-gradient" />
+            </TextManager>
+          </AnimatedText>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             A timeline of the work, research, and projects that shaped how I build today.
           </p>

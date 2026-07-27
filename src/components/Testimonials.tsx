@@ -1,4 +1,7 @@
 import { Quote } from "lucide-react";
+import { AnimatedText } from "@/components/AnimatedText";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 
 const quotes = [
   {
@@ -24,9 +27,12 @@ export function Testimonials() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// Testimonials</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Trusted by <span className="font-serif italic text-gradient">teams that ship</span>
-          </h2>
+          <AnimatedText className="text-4xl md:text-5xl font-bold mb-4">
+            Trusted by{" "}
+            <TextManager effect="scramble">
+              <ScrambleText text="teams that ship" className="font-serif italic text-gradient" />
+            </TextManager>
+          </AnimatedText>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">

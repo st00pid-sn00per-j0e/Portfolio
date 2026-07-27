@@ -108,6 +108,8 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    overflow-x: clip;
   }
 
   body {
@@ -116,6 +118,10 @@
     color: var(--color-foreground);
     font-family: var(--font-display);
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+    overscroll-behavior-y: none;
+    text-rendering: optimizeLegibility;
+    touch-action: pan-y;
   }
 
   ::selection {
@@ -214,12 +220,77 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
+
+  .reveal-text__mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+  }
+
+  .reveal-text__char {
+    display: inline-block;
+    will-change: transform, opacity, filter;
+  }
+
+  .scramble-text {
+    display: inline-block;
+    font-variant-ligatures: none;
+    letter-spacing: -0.04em;
+  }
+
+  .scramble-text--idle {
+    /* Clean, readable state before animation triggers */
+    transform: none;
+    filter: none;
+    opacity: 1;
+  }
+
+  .scramble-text--animating {
+    transform: translateY(4px) rotateX(10deg);
+    filter: blur(2px);
+    opacity: 0.7;
+    transition: none;
+  }
+
+  .scramble-text--finished {
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+    opacity: 1;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
   .parallax-layer {
     transform: none !important;
     will-change: auto;
+  }
+}
+
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  body {
+    background-attachment: scroll;
+    overscroll-behavior-y: auto;
+  }
+
+  .glass {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
 }
 
@@ -251,7 +322,11 @@
 /* Better touch scrolling for certificates section */
 .certificates-scroll {
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+  scroll-padding-inline: 1rem;
   scrollbar-width: none;
+  touch-action: pan-x pan-y;
 }
 .certificates-scroll::-webkit-scrollbar {
   display: none;

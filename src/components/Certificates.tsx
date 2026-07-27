@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import cert1 from '@/assets/certificate 1.jpg';
 import cert2 from '@/assets/certificate 2.jpg';
@@ -8,6 +8,9 @@ import cert5 from '@/assets/certificate 5.jpg';
 import cert6 from '@/assets/certificate 6.jpg';
 import cert7 from '@/assets/certificate 7.jpg';
 import cert9 from '@/assets/certificate 9.jpg';
+import { AnimatedText } from "@/components/AnimatedText";
+import { ScrambleText } from "@/components/animations/ScrambleText";
+import { TextManager } from "@/components/animations/TextManager";
 
 const certificates = [
   { 
@@ -63,6 +66,8 @@ const certificates = [
 export const Certificates: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [useNativeScroll, setUseNativeScroll] = useState(false);
+  const [sectionHeight, setSectionHeight] = useState("300vh");
   // Per-card refs for 3D tilt
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -71,43 +76,87 @@ export const Certificates: React.FC = () => {
     let currentX = 0;
     let targetX = 0;
     let rafId: number;
+    let resizeObserver: ResizeObserver | undefined;
+
+    const nativeScrollQuery = window.matchMedia("(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)");
 
     const lerp = (start: number, end: number, factor: number) =>
       start + (end - start) * factor;
 
+    const syncMode = () => {
+      const shouldUseNativeScroll = nativeScrollQuery.matches;
+      setUseNativeScroll(shouldUseNativeScroll);
+
+      if (shouldUseNativeScroll) {
+        setSectionHeight("auto");
+        targetX = 0;
+        currentX = 0;
+        if (scrollRef.current) {
+          scrollRef.current.style.transform = "translate3d(0, 0, 0)";
+        }
+      }
+    };
+
+    const updateSectionHeight = () => {
+      if (!containerRef.current || !scrollRef.current || nativeScrollQuery.matches) return;
+
+      const scrollDistance = Math.max(0, scrollRef.current.scrollWidth - window.innerWidth);
+      const verticalTravel = Math.max(window.innerHeight * 1.35, scrollDistance * 1.05);
+      setSectionHeight(`${Math.ceil(window.innerHeight + verticalTravel)}px`);
+    };
+
     const updateScrollTarget = () => {
-      if (!containerRef.current || !scrollRef.current) return;
+      if (!containerRef.current || !scrollRef.current || nativeScrollQuery.matches) return;
       const container = containerRef.current;
       const scrollElement = scrollRef.current;
       const containerTop = container.offsetTop;
       const containerHeight = container.clientHeight;
-      const windowScrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const scrollPosition = windowScrollTop - containerTop;
-      const maxScroll = containerHeight - windowHeight;
-      let progress = scrollPosition / maxScroll;
+      const maxScroll = Math.max(1, containerHeight - window.innerHeight);
+      let progress = (window.scrollY - containerTop) / maxScroll;
       progress = Math.max(0, Math.min(1, progress));
-      const maxTranslate = scrollElement.scrollWidth - window.innerWidth;
+      const maxTranslate = Math.max(0, scrollElement.scrollWidth - window.innerWidth);
       targetX = -(progress * maxTranslate);
     };
 
     const tick = () => {
-      currentX = lerp(currentX, targetX, 0.08);
+      if (nativeScrollQuery.matches) {
+        rafId = requestAnimationFrame(tick);
+        return;
+      }
+
+      currentX = lerp(currentX, targetX, 0.11);
+      if (Math.abs(targetX - currentX) < 0.08) currentX = targetX;
+
       if (scrollRef.current) {
         scrollRef.current.style.transform = `translate3d(${currentX}px, 0, 0)`;
       }
       rafId = requestAnimationFrame(tick);
     };
 
-    window.addEventListener('scroll', updateScrollTarget, { passive: true });
-    window.addEventListener('resize', updateScrollTarget);
+    syncMode();
+    updateSectionHeight();
     updateScrollTarget();
     currentX = targetX;
     tick();
 
+    resizeObserver = new ResizeObserver(() => {
+      updateSectionHeight();
+      updateScrollTarget();
+    });
+
+    if (scrollRef.current) resizeObserver.observe(scrollRef.current);
+
+    nativeScrollQuery.addEventListener("change", syncMode);
+    window.addEventListener('scroll', updateScrollTarget, { passive: true });
+    window.addEventListener('resize', updateSectionHeight);
+    window.addEventListener('resize', updateScrollTarget);
+
     return () => {
+      nativeScrollQuery.removeEventListener("change", syncMode);
       window.removeEventListener('scroll', updateScrollTarget);
+      window.removeEventListener('resize', updateSectionHeight);
       window.removeEventListener('resize', updateScrollTarget);
+      resizeObserver?.disconnect();
       cancelAnimationFrame(rafId);
     };
   }, []);
@@ -142,25 +191,28 @@ export const Certificates: React.FC = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative w-full z-20"
-      style={{ height: '300vh' }}
+      className="relative z-20 w-full"
+      style={{ height: sectionHeight }}
     >
-      <div className="sticky top-0 h-[100vh] w-full overflow-hidden flex flex-col justify-center pt-20 md:pt-24 pb-8 md:pb-12">
+      <div className={`${useNativeScroll ? "relative min-h-0" : "sticky top-0 h-dvh"} flex w-full flex-col justify-center overflow-hidden pt-16 pb-8 md:pt-24 md:pb-12`}>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
 
-        <div className="relative w-full text-center z-10 flex-shrink-0 mb-8 md:mb-12">
+        <div className="relative z-10 mb-8 w-full flex-shrink-0 px-4 text-center md:mb-12">
           <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// Achievements</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            My <span className="font-serif italic text-gradient">certificates</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto px-4">
+          <AnimatedText className="mx-auto mb-4 max-w-[min(42rem,100%)] text-balance text-[clamp(2rem,11vw,3rem)] font-bold leading-tight sm:text-4xl md:text-5xl">
+            My{" "}
+            <TextManager effect="scramble">
+              <ScrambleText text="certificates" className="font-serif italic text-gradient whitespace-normal" />
+            </TextManager>
+          </AnimatedText>
+          <p className="mx-auto max-w-2xl text-pretty px-2 text-base leading-relaxed text-muted-foreground sm:text-lg">
             Scroll down to navigate through my achievements horizontally.
           </p>
         </div>
         
         <div 
           ref={scrollRef}
-          className="flex items-center gap-8 md:gap-12 px-[10vw] py-4 w-max flex-grow-0"
+          className={`${useNativeScroll ? "certificates-scroll w-full snap-x snap-mandatory overflow-x-auto px-4 sm:px-6" : "w-max px-[10vw]"} flex flex-grow-0 items-center gap-5 py-4 sm:gap-8 md:gap-12`}
           style={{ willChange: 'transform' }}
         >
           {certificates.map((cert, i) => (
@@ -169,7 +221,7 @@ export const Certificates: React.FC = () => {
               ref={(el) => { cardRefs.current[i] = el; }}
               onMouseMove={(e) => handleMouseMove(e, i)}
               onMouseLeave={() => handleMouseLeave(i)}
-              className="relative w-[280px] sm:w-[350px] md:w-[450px] shrink-0 glass rounded-2xl p-3 overflow-hidden cursor-pointer hover:border-primary/50 transition-colors"
+              className={`${useNativeScroll ? "w-[min(82vw,22rem)] snap-center" : "w-[280px] sm:w-[350px] md:w-[450px]"} relative shrink-0 cursor-pointer overflow-hidden rounded-2xl p-3 glass transition-colors hover:border-primary/50`}
               style={{
                 transformStyle: 'preserve-3d',
                 willChange: 'transform',

@@ -1,6 +1,6 @@
 import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, useGLTF, Environment, Center } from "@react-three/drei";
+import { AdaptiveDpr, Center, Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
 const modelPath = "/3d-model/base_basic_shaded.glb";
@@ -9,12 +9,15 @@ function Model() {
   const { scene } = useGLTF(modelPath);
   const groupRef = useRef<THREE.Group>(null!);
 
-  // Gentle idle bobbing
-  useFrame((state) => {
+  // Gentle idle bobbing — using delta instead of deprecated THREE.Clock
+  const timeRef = useRef(0);
+
+  useFrame((_state, delta) => {
     if (groupRef.current) {
+      timeRef.current += delta;
       groupRef.current.rotation.y += 0.003;
       groupRef.current.position.y =
-        Math.sin(state.clock.elapsedTime * 0.8) * 0.05;
+        Math.sin(timeRef.current * 0.8) * 0.05;
     }
   });
 
@@ -42,51 +45,54 @@ function LoadingSpinner() {
 
 export function MeetMe() {
   return (
-    <section id="meet-me" className="relative py-20 md:py-32 px-4 sm:px-6 overflow-hidden">
+    <section id="meet-me" className="relative overflow-hidden px-4 py-16 sm:px-6 md:py-28">
       {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36rem] h-[36rem] rounded-full bg-primary/10 blur-[160px] pointer-events-none" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[140px] sm:h-[36rem] sm:w-[36rem]" />
 
       <div className="container mx-auto max-w-6xl">
-        <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-center">
+        <div className="grid min-w-0 items-center gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14">
           {/* Text side */}
-          <div className="text-center lg:text-left">
-            <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">
+          <div className="min-w-0 text-center lg:text-left">
+            <p className="mb-4 font-mono text-sm uppercase tracking-widest text-primary">
               // Meet Me
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h2 className="mx-auto mb-5 max-w-[18rem] text-[clamp(2.15rem,10vw,3rem)] font-bold leading-[1.08] text-foreground sm:max-w-[34rem] md:text-5xl lg:mx-0">
               How it is like to{" "}
-              <span className="font-serif italic text-gradient">meet me,</span>
+              <span className="inline-block whitespace-nowrap font-serif italic text-gradient">
+                meet me,
+              </span>
             </h2>
-            <p className="text-2xl md:text-3xl text-muted-foreground leading-relaxed mb-8">
+            <p className="mx-auto mb-7 max-w-[20rem] text-xl leading-relaxed text-muted-foreground sm:max-w-[32rem] sm:text-2xl md:text-3xl lg:mx-0">
               well, ask{" "}
-              <span className="text-foreground font-bold">low-poly me</span>{" "}
+              <span className="font-bold text-foreground">low-poly me</span>{" "}
               <span className="font-serif italic text-gradient">:</span>
             </p>
-            <div className="flex flex-wrap items-center gap-3 justify-center lg:justify-start">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-mono text-muted-foreground">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+              <span className="glass inline-flex min-h-10 items-center gap-2 rounded-full px-3.5 py-2 font-mono text-xs text-muted-foreground sm:text-sm">
+                <span className="h-2 w-2 shrink-0 rounded-full bg-primary animate-pulse" />
                 Drag to rotate
               </span>
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm font-mono text-muted-foreground">
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" style={{ animationDelay: "0.5s" }} />
-                Scroll to zoom
+              <span className="glass inline-flex min-h-10 items-center gap-2 rounded-full px-3.5 py-2 font-mono text-xs text-muted-foreground sm:text-sm">
+                <span className="h-2 w-2 shrink-0 rounded-full bg-accent animate-pulse" style={{ animationDelay: "0.5s" }} />
+                Smooth on touch
               </span>
             </div>
           </div>
 
           {/* 3D Canvas side */}
-          <div className="relative mx-auto lg:mx-0 w-full max-w-lg lg:max-w-none">
+          <div className="relative mx-auto w-full max-w-[22rem] sm:max-w-lg lg:mx-0 lg:max-w-none">
             {/* Glow ring behind canvas */}
-            <div className="absolute -inset-3 bg-gradient-primary opacity-20 blur-3xl rounded-3xl animate-pulse-glow pointer-events-none" />
+            <div className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-primary opacity-20 blur-3xl animate-pulse-glow" />
 
-            <div className="relative glass rounded-3xl overflow-hidden p-1">
+            <div className="glass relative overflow-hidden rounded-3xl p-1">
               {/* Gradient border effect */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-border opacity-50 pointer-events-none" />
+              <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-border opacity-50" />
 
-              <div className="relative aspect-square md:aspect-[4/5] rounded-[1.3rem] overflow-hidden bg-background/40">
+              <div className="relative aspect-[1/1.08] overflow-hidden rounded-[1.3rem] bg-background/40 sm:aspect-square md:aspect-[4/5]">
                 <Suspense fallback={<LoadingSpinner />}>
                   <Canvas
                     camera={{ position: [0, 0.3, 4], fov: 45 }}
+                    dpr={[1, 1.5]}
                     gl={{ antialias: true, alpha: true }}
                     style={{ background: "transparent" }}
                   >
@@ -112,7 +118,7 @@ export function MeetMe() {
 
                     <OrbitControls
                       enablePan={false}
-                      enableZoom={true}
+                      enableZoom={false}
                       minDistance={2.5}
                       maxDistance={7}
                       minPolarAngle={Math.PI / 4}
@@ -121,6 +127,7 @@ export function MeetMe() {
                       autoRotateSpeed={1.5}
                     />
 
+                    <AdaptiveDpr />
                     <Environment preset="city" />
                   </Canvas>
                 </Suspense>
