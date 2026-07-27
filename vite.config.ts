@@ -11,7 +11,7 @@ export default defineConfig({
     tailwindcss(),
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart(),
-    nitro(),
+    nitro({ preset: 'vercel' }),
     react(),
   ],
   resolve: {
