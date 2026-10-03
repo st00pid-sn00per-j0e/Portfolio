@@ -2,6 +2,27 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 
 import appCss from "../styles.css?url";
 
+const siteUrl = "https://yourportfolio.com";
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Syed Bilal Hussain Nizami",
+  jobTitle: "Software Developer & AI Engineer",
+  url: siteUrl,
+  sameAs: [
+    "https://www.linkedin.com/in/syed-bilal-hussain-nizami",
+    "https://github.com/syedbilalhussainnizami",
+  ],
+  knowsAbout: [
+    "React",
+    "TypeScript",
+    "Node.js",
+    "Python",
+    "AI Engineering",
+    "Full-Stack Development",
+  ],
+};
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -29,20 +50,28 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Syed Bilal Hussain Nizami — Software Developer" },
+      { name: "robots", content: "index,follow" },
+      { name: "theme-color", content: "#09120f" },
+      { title: "Syed Bilal Hussain Nizami — Software Developer & AI Engineer" },
       {
         name: "description",
         content:
-          "Full-stack developer & AI engineer. React, Node.js, TypeScript, LangChain, and fine-tuned transformers.",
+          "Software developer and AI engineer building high-performance web experiences, AI systems, and full-stack products with React, TypeScript, Python, and modern cloud workflows.",
       },
+      { name: "keywords", content: "software developer, AI engineer, full stack developer, React developer, TypeScript, Python, portfolio" },
       { name: "author", content: "Syed Bilal Hussain Nizami" },
-      { property: "og:title", content: "Syed Bilal Hussain Nizami — Software Developer" },
+      { property: "og:title", content: "Syed Bilal Hussain Nizami — Software Developer & AI Engineer" },
       {
         property: "og:description",
-        content: "Building production-grade web apps and AI systems.",
+        content: "Building production-grade web apps and AI systems with React, TypeScript, Python, and modern full-stack engineering.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { property: "og:url", content: siteUrl },
+      { property: "og:site_name", content: "Syed Bilal Hussain Nizami" },
+      { property: "og:locale", content: "en_US" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Syed Bilal Hussain Nizami — Software Developer & AI Engineer" },
+      { name: "twitter:description", content: "Software developer and AI engineer building high-performance digital products and intelligent systems." },
       { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
@@ -50,11 +79,18 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "canonical", href: siteUrl },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap",
+      },
+    ],
+    script: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(personSchema),
       },
     ],
   }),
