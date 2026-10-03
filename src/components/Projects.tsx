@@ -3,6 +3,9 @@ import aiDashboard from "@/assets/project-ai-dashboard.jpg";
 import legalBert from "@/assets/project-legal-bert.jpg";
 import ecommerce from "@/assets/project-ecommerce.jpg";
 import portfolio from "@/assets/project-portfolio.jpg";
+import replitCloneProject from "@/assets/Replit Clone project.mp4";
+import knowledgeGraphProject from "@/assets/Knowledge Graph.mp4";
+import carMotionProject from "@/assets/Real time car moving.mp4";
 import { AnimatedText } from "@/components/AnimatedText";
 import { ScrambleText } from "@/components/animations/ScrambleText";
 import { TextManager } from "@/components/animations/TextManager";
@@ -29,6 +32,27 @@ const projects = [
       "Full-stack marketplace with Stripe payments, JWT auth, and containerized deployment. Built for scale.",
     tags: ["Next.js", "Express", "PostgreSQL", "Docker"],
     image: ecommerce,
+  },
+  {
+    title: "AI-Powered Replit Clone",
+    description:
+      "Developed an AI-powered Replit clone integrating GPT-Sol and Astra to deliver an intelligent browser-based coding environment. Built an interactive development interface supporting code editing, AI-assisted development, and streamlined programming workflows with a focus on developer productivity and scalable software architecture.",
+    tags: ["AI Integration", "Python", "JavaScript", "Full-Stack", "LLMs", "Web IDE"],
+    video: replitCloneProject,
+  },
+  {
+    title: "Knowledge Graph for Data Enrichment",
+    description:
+      "Built a knowledge-graph-based data enrichment system that transformed fragmented company and business data into structured, interconnected intelligence. The platform connected entities across people, companies, decision-makers, technologies, contacts, and relationships while automating enrichment, normalization, validation, and downstream data quality workflows.",
+    tags: ["Python", "Knowledge Graphs", "NLP", "LLMs", "ETL", "PostgreSQL"],
+    video: knowledgeGraphProject,
+  },
+  {
+    title: "Flutter Mobile ERP Application",
+    description:
+      "Developed a cross-platform mobile ERP application using Flutter and Dart for BoxTech, enabling centralized access to business operations and ERP workflows. The solution integrated responsive mobile screens, REST API communication, authentication, business logic, database interaction, and deployment-focused performance optimization for real business use.",
+    tags: ["Flutter", "Dart", "ERP", "Mobile", "REST API", "Business Apps"],
+    video: carMotionProject,
   },
   {
     title: "Portfolio Site",
@@ -64,14 +88,26 @@ export function Projects() {
               style={{ animationDelay: `${i * 100}ms` }}
             >
               <div className="relative h-56 overflow-hidden">
-                <img
-                  src={p.image}
-                  alt={`${p.title} preview`}
-                  width={1280}
-                  height={768}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
+                {p.video ? (
+                  <video
+                    src={p.video}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                ) : (
+                  <img
+                    src={p.image}
+                    alt={`${p.title} preview`}
+                    width={1280}
+                    height={768}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent pointer-events-none" />
                 <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full glass text-[10px] font-mono uppercase tracking-wider text-primary">
                   {p.tags[0]}

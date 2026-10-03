@@ -19,7 +19,7 @@ export function ScrambleText({
   className,
   ...props
 }: ScrambleTextProps) {
-  const [output, setOutput] = useState(text);
+  const [output, setOutput] = useState("");
   const [state, setState] = useState<"idle" | "animating" | "finished">("idle");
   const started = useRef(false);
   const { ref, isIntersecting } = useIntersection<HTMLSpanElement>({
@@ -29,10 +29,27 @@ export function ScrambleText({
   });
 
   useEffect(() => {
-    if (!trigger || !isIntersecting || started.current) return;
+    if (!trigger) {
+      setOutput(text);
+      setState("finished");
+      started.current = true;
+      return;
+    }
+
+    if (!isIntersecting) {
+      if (!once) {
+        started.current = false;
+      }
+      setOutput("");
+      setState("idle");
+      return;
+    }
+
+    if (started.current) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setOutput(text);
       setState("finished");
+      started.current = true;
       return;
     }
 
@@ -57,7 +74,7 @@ export function ScrambleText({
     }, speed);
 
     return () => window.clearInterval(interval);
-  }, [isIntersecting, speed, text, trigger]);
+  }, [isIntersecting, once, speed, text, trigger]);
 
   return (
     <span
