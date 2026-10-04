@@ -1,4 +1,4 @@
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { AdaptiveDpr, Center, Environment, OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -8,16 +8,13 @@ const modelPath = "/3d-model/base_basic_shaded.glb";
 function Model() {
   const { scene } = useGLTF(modelPath);
   const groupRef = useRef<THREE.Group>(null!);
-
-  // Gentle idle bobbing — using delta instead of deprecated THREE.Clock
   const timeRef = useRef(0);
 
   useFrame((_state, delta) => {
     if (groupRef.current) {
       timeRef.current += delta;
       groupRef.current.rotation.y += 0.003;
-      groupRef.current.position.y =
-        Math.sin(timeRef.current * 0.8) * 0.05;
+      groupRef.current.position.y = Math.sin(timeRef.current * 0.8) * 0.05;
     }
   });
 
@@ -30,28 +27,69 @@ function Model() {
   );
 }
 
-function LoadingSpinner() {
+function ModelLoadingScreen({ isLowPower = false }: { isLowPower?: boolean }) {
   return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-12 h-12 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
-        <span className="text-sm font-mono text-muted-foreground animate-pulse">
-          Loading 3D model...
-        </span>
+    <div className="model-loader-screen" aria-live="polite" aria-busy="true">
+      <div className="model-loader-screen__orb" />
+      <div className="model-loader-screen__panel">
+        <div className="model-loader-screen__spinner" />
+        <div className="model-loader-screen__meta">
+          <span className="model-loader-screen__tag">3D scene</span>
+          <span className="model-loader-screen__label">
+            {isLowPower ? "Low-power mode" : "Loading model"}
+          </span>
+        </div>
+        <div className="model-loader-screen__bar" aria-label="3D model loading progress">
+          <span className="model-loader-screen__fill" />
+        </div>
       </div>
     </div>
   );
 }
 
+function ModelFallback({ isLowPower }: { isLowPower: boolean }) {
+  return (
+    <div className="model-fallback" role="img" aria-label={isLowPower ? "Low-power 3D model preview" : "3D model unavailable on this device"}>
+      <div className="model-fallback__halo" />
+      <div className="model-fallback__core" />
+      <div className="model-fallback__badge">{isLowPower ? "Mobile-safe view" : "3D paused"}</div>
+      <div className="model-fallback__title">Optimized for smooth performance</div>
+      <p className="model-fallback__text">
+        {isLowPower
+          ? "This device is running a low-power mode to keep the experience stable and responsive."
+          : "The interactive model is waiting for a better rendering profile on this device."}
+      </p>
+    </div>
+  );
+}
+
 export function MeetMe() {
+  const [isMobile, setIsMobile] = useState<boolean>(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : false,
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateMobileState = () => setIsMobile(mediaQuery.matches);
+
+    updateMobileState();
+    mediaQuery.addEventListener("change", updateMobileState);
+    return () => mediaQuery.removeEventListener("change", updateMobileState);
+  }, []);
+
+  const isLowPowerDevice =
+    isMobile ||
+    (typeof navigator !== "undefined" && typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4);
+  const shouldRenderModel = !isLowPowerDevice;
+
   return (
     <section id="meet-me" className="relative overflow-hidden px-4 py-16 sm:px-6 md:py-28">
-      {/* Ambient glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[140px] sm:h-[36rem] sm:w-[36rem]" />
 
       <div className="container mx-auto max-w-6xl">
         <div className="grid min-w-0 items-center gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14">
-          {/* Text side */}
           <div className="min-w-0 text-center lg:text-left">
             <p className="mb-4 font-mono text-sm uppercase tracking-widest text-primary">
               // Meet Me
@@ -79,58 +117,52 @@ export function MeetMe() {
             </div>
           </div>
 
-          {/* 3D Canvas side */}
           <div className="relative mx-auto w-full max-w-[22rem] sm:max-w-lg lg:mx-0 lg:max-w-none">
-            {/* Glow ring behind canvas */}
             <div className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-primary opacity-20 blur-3xl animate-pulse-glow" />
 
             <div className="glass relative overflow-hidden rounded-3xl p-1">
-              {/* Gradient border effect */}
               <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-border opacity-50" />
 
               <div className="relative aspect-[1/1.08] overflow-hidden rounded-[1.3rem] bg-background/40 sm:aspect-square md:aspect-[4/5]">
-                <Suspense fallback={<LoadingSpinner />}>
-                  <Canvas
-                    camera={{ position: [0, 0.3, 4], fov: 45 }}
-                    dpr={[1, 1.5]}
-                    gl={{ antialias: true, alpha: true }}
-                    style={{ background: "transparent" }}
-                  >
-                    {/* Lighting */}
-                    <ambientLight intensity={0.6} />
-                    <directionalLight
-                      position={[3, 5, 4]}
-                      intensity={1.2}
-                      color="#a8f0c6"
-                    />
-                    <directionalLight
-                      position={[-3, 3, -2]}
-                      intensity={0.4}
-                      color="#7dd3a8"
-                    />
-                    <pointLight
-                      position={[0, 2, 3]}
-                      intensity={0.5}
-                      color="#b8f5d4"
-                    />
+                {!shouldRenderModel ? (
+                  <ModelFallback isLowPower={isLowPowerDevice} />
+                ) : (
+                  <Suspense fallback={<ModelLoadingScreen />}>
+                    <Canvas
+                      camera={{ position: [0, 0.3, 4], fov: 45 }}
+                      dpr={[1, 1.5]}
+                      gl={{
+                        antialias: true,
+                        alpha: true,
+                        powerPreference: "high-performance",
+                      }}
+                      frameloop="always"
+                      style={{ background: "transparent" }}
+                    >
+                      <ambientLight intensity={0.6} />
+                      <directionalLight position={[3, 5, 4]} intensity={1.2} color="#a8f0c6" />
+                      <directionalLight position={[-3, 3, -2]} intensity={0.4} color="#7dd3a8" />
+                      <pointLight position={[0, 2, 3]} intensity={0.5} color="#b8f5d4" />
 
-                    <Model />
+                      <Model />
 
-                    <OrbitControls
-                      enablePan={false}
-                      enableZoom={false}
-                      minDistance={2.5}
-                      maxDistance={7}
-                      minPolarAngle={Math.PI / 4}
-                      maxPolarAngle={Math.PI / 1.8}
-                      autoRotate={false}
-                      autoRotateSpeed={1.5}
-                    />
+                      <OrbitControls
+                        enablePan={false}
+                        enableZoom={false}
+                        enableDamping
+                        minDistance={2.5}
+                        maxDistance={7}
+                        minPolarAngle={Math.PI / 4}
+                        maxPolarAngle={Math.PI / 1.8}
+                        autoRotate={false}
+                        autoRotateSpeed={1.5}
+                      />
 
-                    <AdaptiveDpr />
-                    <Environment preset="city" />
-                  </Canvas>
-                </Suspense>
+                      <AdaptiveDpr />
+                      <Environment preset="city" />
+                    </Canvas>
+                  </Suspense>
+                )}
               </div>
             </div>
           </div>

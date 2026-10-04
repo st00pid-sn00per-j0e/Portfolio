@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Github, ExternalLink } from "lucide-react";
 import aiDashboard from "@/assets/project-ai-dashboard.jpg";
 import legalBert from "@/assets/project-legal-bert.jpg";
@@ -9,6 +10,45 @@ import carMotionProject from "@/assets/Real time car moving.mp4";
 import { AnimatedText } from "@/components/AnimatedText";
 import { ScrambleText } from "@/components/animations/ScrambleText";
 import { TextManager } from "@/components/animations/TextManager";
+
+function ProjectVideo({ src }: { src: string }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const startPlayback = async () => {
+      try {
+        video.muted = true;
+        video.playsInline = true;
+        await video.play();
+      } catch {
+        // Some mobile browsers block autoplay until the user interacts. The loop fallback
+        // below still keeps the video cycling once playback is allowed.
+      }
+    };
+
+    startPlayback();
+  }, [src]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      onEnded={(event) => {
+        event.currentTarget.currentTime = 0;
+        void event.currentTarget.play();
+      }}
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+    />
+  );
+}
 
 const projects = [
   {
@@ -89,15 +129,7 @@ export function Projects() {
             >
               <div className="relative h-56 overflow-hidden">
                 {p.video ? (
-                  <video
-                    src={p.video}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
+                  <ProjectVideo src={p.video} />
                 ) : (
                   <img
                     src={p.image}
