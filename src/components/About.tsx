@@ -46,7 +46,7 @@ export function About() {
           <div>
             <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// About Me</p>
             <AnimatedText className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
-              Building with{" "}
+              <span className="whitespace-nowrap">Building with</span>{" "}
               <TextManager effect="scramble">
                 <ScrambleText text="code & intelligence" className="font-serif italic text-gradient" />
               </TextManager>
