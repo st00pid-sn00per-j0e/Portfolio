@@ -75,15 +75,6 @@ export default defineConfig({
 
   build: {
     target: "es2022",
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          "three-core": ["three"],
-          r3f: ["@react-three/fiber", "@react-three/drei"],
-          gsap: ["gsap", "gsap/ScrollTrigger", "split-type"],
-        },
-      },
-    },
     assetsInlineLimit: 4096,
   },
 
