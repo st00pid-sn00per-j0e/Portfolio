@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useParallaxLayer } from "@/hooks/useParallax";
 import { ScrambleText } from "@/components/animations/ScrambleText";
 import { TextManager } from "@/components/animations/TextManager";
-import heroBack from "@/assets/Generated Image April 19, 2026 - 12_28AM.png";
-import heroMid from "@/assets/Generated Image April 19, 2026 - 12_29AM.png";
-import heroFront from "@/assets/Generated_Image_April_18__2026_-_11_29PM-removebg-preview.png";
-
+import heroBack  from "@/assets/Generated Image April 19, 2026 - 12_28AM.png?hero";
+import heroMid   from "@/assets/Generated Image April 19, 2026 - 12_29AM.png?hero";
+import heroFront from "@/assets/Generated_Image_April_18__2026_-_11_29PM-removebg-preview.png?hero=alpha";
 const ROLES = [
   "Software Developer",
   "AI Agent Engineer",
@@ -58,42 +57,34 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden grid-pattern noise">
-      {/* Back layer - slowest (0.08x) */}
-      <div
-        ref={backLayer as React.RefObject<HTMLDivElement>}
-        className="parallax-layer absolute inset-0 z-10"
-      >
+      {/* Back layer */}
+      <div ref={backLayer as React.RefObject<HTMLDivElement>} className="parallax-layer absolute inset-0 z-10">
         <img
-src={heroBack}
+          src={heroBack.img.src}       // ← was src={heroBack}
           alt=""
-className="absolute inset-0 w-full h-full object-cover opacity-60"
-          style={{ width: '100vw', height: '100vh' }}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
         />
       </div>
 
-      {/* Middle layer - medium (0.3x) */}
-      <div
-        ref={midLayer as React.RefObject<HTMLDivElement>}
-        className="parallax-layer absolute inset-0 z-20"
-      >
+      {/* Middle layer */}
+      <div ref={midLayer as React.RefObject<HTMLDivElement>} className="parallax-layer absolute inset-0 z-20">
         <img
-src={heroMid}
+          src={heroMid.img.src}        // ← was src={heroMid}
           alt=""
-className="absolute inset-0 w-full h-full object-cover opacity-80"
-          style={{ width: '100vw', height: '100vh' }}
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover opacity-80"
         />
       </div>
 
-      {/* Front layer - fastest (0.6x) */}
-      <div
-        ref={frontLayer as React.RefObject<HTMLDivElement>}
-        className="parallax-layer absolute inset-0 z-30"
-      >
+      {/* Front layer */}
+      <div ref={frontLayer as React.RefObject<HTMLDivElement>} className="parallax-layer absolute inset-0 z-30">
         <img
-src={heroFront}
+          src={heroFront.img.src}       // ← was src={heroFront}
           alt=""
-className="absolute inset-0 w-full h-full object-cover opacity-100"
-          style={{ width: '100vw', height: '100vh' }}
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover opacity-100"
         />
       </div>
 
@@ -155,7 +146,7 @@ className="absolute inset-0 w-full h-full object-cover opacity-100"
           <span className="inline-block w-[3px] h-6 md:h-8 bg-primary ml-1 align-middle animate-blink" />
         </p>
         <p className="text-sm sm:text-base md:text-lg text-muted-foreground/70 max-w-xl mx-auto mb-8 md:mb-12 font-mono">
-          React · Node.js · Python · TypeScript · LangChain · Hugging Face
+          I build things that break — then make sure they never do again.
         </p>
 
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12 md:mb-16">

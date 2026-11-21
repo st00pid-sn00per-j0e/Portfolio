@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { AdaptiveDpr, Center, Environment, OrbitControls, useGLTF } from "@react-three/drei";
+import { AdaptiveDpr, Center, OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
 const modelPath = "/3d-model/base_basic_shaded.glb";
@@ -21,7 +21,7 @@ function Model() {
   return (
     <group ref={groupRef}>
       <Center>
-        <primitive object={scene} scale={1.8} />
+        <primitive object={scene} scale={1.8} dispose={null} />
       </Center>
     </group>
   );
@@ -68,15 +68,18 @@ export function MeetMe() {
     typeof window !== "undefined" ? window.innerWidth < 768 : false,
   );
 
+  const [inView, setInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const updateMobileState = () => setIsMobile(mediaQuery.matches);
-
-    updateMobileState();
-    mediaQuery.addEventListener("change", updateMobileState);
-    return () => mediaQuery.removeEventListener("change", updateMobileState);
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "200px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   const isLowPowerDevice =
@@ -123,8 +126,11 @@ export function MeetMe() {
             <div className="glass relative overflow-hidden rounded-3xl p-1">
               <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-border opacity-50" />
 
-              <div className="relative aspect-[1/1.08] overflow-hidden rounded-[1.3rem] bg-background/40 sm:aspect-square md:aspect-[4/5]">
-                {!shouldRenderModel ? (
+                    <div
+                      ref={containerRef}
+                      className="relative aspect-[1/1.08] overflow-hidden rounded-[1.3rem] bg-background/40 sm:aspect-square md:aspect-[4/5]"
+                    >                
+                    {!shouldRenderModel ? (
                   <ModelFallback isLowPower={isLowPowerDevice} />
                 ) : (
                   <Suspense fallback={<ModelLoadingScreen />}>
@@ -136,8 +142,7 @@ export function MeetMe() {
                         alpha: true,
                         powerPreference: "high-performance",
                       }}
-                      frameloop="always"
-                      style={{ background: "transparent" }}
+                      frameloop={inView ? "always" : "demand"}                      style={{ background: "transparent" }}
                     >
                       <ambientLight intensity={0.6} />
                       <directionalLight position={[3, 5, 4]} intensity={1.2} color="#a8f0c6" />
@@ -159,7 +164,6 @@ export function MeetMe() {
                       />
 
                       <AdaptiveDpr />
-                      <Environment preset="city" />
                     </Canvas>
                   </Suspense>
                 )}

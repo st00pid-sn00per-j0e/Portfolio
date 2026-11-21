@@ -9,32 +9,31 @@ import { TextManager } from "@/components/animations/TextManager";
 
 const items = [
   {
-    year: "Nov 2025 - Present",
+    year: "Dec 2024 — Present",
     icon: Briefcase,
-    title: "Associate Software Engineer",
-    org: "Lime Software Logics · Full-time · Bahria Towers Tariq Road · Karachi Division, Sindh, Pakistan · On-site",
+    title: "Software Developer",
+    org: "Lime Software Logics (SMC-PVT) Ltd. · Full-time · Bahria Towers, Tariq Road · Karachi, Pakistan · On-site",
     logo: limeLogo,
-    description: "Associate Software Engineer at Lime Software Logics.",
-    tags: ["Automation", "Python", "Selenium", "Playwright", "CI/CD"],
+    description:
+      "Owned 56 services and features end to end across API, business-logic, and data layers. Improved application response time by 45% through query tuning and indexing. Designed versioned APIs and drove weekly-release CI/CD. Resolved 88 production incidents with 30% fewer repeats. Recognized with the Star of the Quarter award.",
   },
   {
-    year: "Oct 2025 - Nov 2025",
+    year: "Oct 2025 — Nov 2025",
     icon: Briefcase,
     title: "Monitoring And Evaluation Officer",
     org: "Texas Jasmine Wholesale · Full-time · Texas, United States · Remote",
     logo: texasJasmineLogo,
     description:
-      "To provide ongoing feedback to managers and guide real-time management decisions to ensure the project stays on track.",
-    tags: ["Monitoring", "Evaluation", "Management"],
+      "Provided ongoing feedback to managers and guided real-time management decisions to ensure the project stayed on track.",
   },
   {
-    year: "Jan 2025 - Jul 2025",
+    year: "Jan 2024 — Dec 2024",
     icon: Briefcase,
-    title: "Python Developer",
-    org: "Minsoft Technologies · Full-time · WeWork Office At Shahrah E Faisal · Karachi Division, Sindh, Pakistan · On-site",
+    title: "Junior Software Developer",
+    org: "Minsoft Technologies · Full-time · WeWork Office at Shahrah-e-Faisal · Karachi, Pakistan · On-site",
     logo: minsoftLogo,
-    description: "Python Developer at Minsoft Technologies.",
-    tags: ["Python"],
+    description:
+      "Delivered 15+ backend services and API endpoints from specification through testing and release, achieving a 95% first-pass QA acceptance rate. Improved response times by 20% across 15+ high-traffic endpoints. Implemented validation, authentication, and structured exception handling, reducing input-related defects by 45%.",
   },
   {
     year: "2024 — Now",
@@ -42,17 +41,15 @@ const items = [
     title: "Independent AI Engineer",
     org: "Freelance · Remote",
     description:
-      "Building agentic LLM systems with LangChain, fine-tuning domain-specific transformers, and shipping React/Node SaaS products end-to-end.",
-    tags: ["LangChain", "RAG", "Hugging Face"],
+      "Built agentic AI systems, fine-tuned domain-specific transformer models, and shipped end-to-end SaaS products for clients.",
   },
   {
-    year: "2023",
+    year: "May 2025",
     icon: Award,
-    title: "Published LEGAL-BERT",
-    org: "Hugging Face · Open Source (FYP Project: LEXI-GUARD)",
+    title: "Published LEGAL-BERT by Nizami",
+    org: "Hugging Face · Open Source (FYP: Lexi-Guard)",
     description:
-      "Fine-tuned a BERT model for legal text understanding and published it openly. Used by researchers exploring legal NLP downstream tasks.",
-    tags: ["PyTorch", "Transformers", "NLP"],
+      "Fine-tuned and published a legal-domain NLP model (approximately 100M parameters) evaluated with F1 score. Applications include legal text classification, semantic analysis, and contract risk detection.",
   },
   {
     year: "2022 — 2024",
@@ -60,17 +57,15 @@ const items = [
     title: "Full-Stack Developer",
     org: "Multiple Startups",
     description:
-      "Designed and shipped marketplaces, dashboards, and internal tools using React, Next.js, Node and PostgreSQL — with Docker and CI pipelines.",
-    tags: ["React", "Node.js", "Docker"],
+      "Designed and shipped marketplaces, dashboards, and internal tools — with containerized deployment and CI pipelines.",
   },
   {
-    year: "2022 — 2026",
+    year: "2020 — 2024",
     icon: GraduationCap,
-    title: "B.S. Computer Science",
-    org: "Karachi, Pakistan",
+    title: "B.E. Software Engineering",
+    org: "Sir Syed University of Engineering and Technology · Karachi, Pakistan",
     description:
-      "Foundations in algorithms, distributed systems, and machine learning, with a degree exploring transformer architectures.",
-    tags: ["CS", "ML", "Research", "AI", "Final Year Project"],
+      "Coursework: OOP, Database Systems and SQL, Data Structures and Algorithms, Software Engineering, Software Design and Architecture, Operating Systems. Final Year Project: LEGAL-BERT / Lexi-Guard.",
   },
 ];
 
@@ -83,13 +78,10 @@ function easeOutCubic(t: number) {
 }
 
 export function Experience() {
-  // wrapperRefs drive the scroll translateX + opacity
   const wrapperRefs = useRef<(HTMLDivElement | null)[]>([]);
-  // cardRefs drive the 3D mouse tilt
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const rafRef = useRef<number | null>(null);
 
-  // ── Scroll-driven slide-in ──────────────────────────────────────────────
   useEffect(() => {
     const update = () => {
       const vh = window.innerHeight;
@@ -128,7 +120,6 @@ export function Experience() {
     };
   }, []);
 
-  // ── 3D mouse-tilt handlers ──────────────────────────────────────────────
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, i: number) => {
     const card = cardRefs.current[i];
     if (!card) return;
@@ -137,12 +128,11 @@ export function Experience() {
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
 
-    // Normalize cursor offset to [-1, 1]
     const nx = (e.clientX - cx) / (rect.width / 2);
     const ny = (e.clientY - cy) / (rect.height / 2);
 
-    const rotY = nx * 12; // max ±12 deg on Y axis
-    const rotX = -ny * 8; // max ±8 deg on X axis
+    const rotY = nx * 12;
+    const rotX = -ny * 8;
 
     card.style.transform = `perspective(900px) rotateY(${rotY}deg) rotateX(${rotX}deg) scale3d(1.02, 1.02, 1.02)`;
   };
@@ -152,7 +142,6 @@ export function Experience() {
     if (!card) return;
     card.style.transition = "transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)";
     card.style.transform = "perspective(900px) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)";
-    // Remove the transition after it settles so mouse-move feels instant again
     setTimeout(() => {
       if (card) card.style.transition = "";
     }, 500);
@@ -182,18 +171,16 @@ export function Experience() {
               const left = i % 2 === 0;
               return (
                 <div
-                  key={item.title}
+                  key={item.title + item.year}
                   className={`relative grid md:grid-cols-2 gap-6 md:gap-12 items-center ${
                     left ? "" : "md:[&>*:first-child]:order-2"
                   }`}
                 >
-                  {/* Scroll wrapper — owns translateX + opacity */}
                   <div
                     ref={(el) => { wrapperRefs.current[i] = el; }}
                     style={{ opacity: 0, willChange: "transform, opacity" }}
                     className="ml-12 md:ml-0"
                   >
-                    {/* Card — owns 3D tilt */}
                     <div
                       ref={(el) => { cardRefs.current[i] = el; }}
                       onMouseMove={(e) => handleMouseMove(e, i)}
@@ -214,16 +201,6 @@ export function Experience() {
                       <h3 className="text-xl font-bold mb-1">{item.title}</h3>
                       <div className="text-sm text-muted-foreground/80 font-mono mb-3">{item.org}</div>
                       <p className="text-muted-foreground leading-relaxed mb-4">{item.description}</p>
-                      <div className={`flex flex-wrap gap-2 ${left ? "md:justify-end" : ""}`}>
-                        {item.tags.map((t) => (
-                          <span
-                            key={t}
-                            className="px-2.5 py-1 rounded-md text-xs font-mono bg-secondary/40 border border-border text-muted-foreground"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
                     </div>
                   </div>
 
