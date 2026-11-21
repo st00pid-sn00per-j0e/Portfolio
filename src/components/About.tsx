@@ -46,20 +46,22 @@ export function About() {
           <div>
             <p className="font-mono text-sm text-primary mb-4 tracking-widest uppercase">// About Me</p>
             <AnimatedText className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
-              Building the future with{" "}
+              Building with{" "}
               <TextManager effect="scramble">
                 <ScrambleText text="code & intelligence" className="font-serif italic text-gradient" />
               </TextManager>
             </AnimatedText>
             <div className="space-y-5 text-muted-foreground text-lg leading-relaxed">
               <p>
-                I'm a passionate full-stack developer specializing in modern web technologies and applied AI.
-                I architect performance, scalable systems with React, Node.js, TypeScript, Python, and push them
-                further with LLMs and agentic workflows.
+                Software engineer with 3+ years of end-to-end product delivery and senior-level ownership
+                of business-critical applications. I work across architecture, technical design, implementation,
+                automated testing, secure code review, deployment, and production support — owning features
+                from first commit to steady state.
               </p>
               <p>
-                Currently exploring AI agents with <span className="text-primary font-semibold">LangChain</span>,
-fine-tuning domain-specific transformers like my LEGAL-BERT model with RAG pipelines in Qdrant vector database{" "}
+                So far I've delivered 56 services and features end to end, integrated 12 external systems,
+                resolved 88 production incidents, and improved application response time by 45% through
+                structural tuning and query optimization. Outside of product work I published{" "}
                 <a
                   href="https://huggingface.co/Nizami98/LEGAL-BERT-By-Nizami"
                   target="_blank"
@@ -68,7 +70,7 @@ fine-tuning domain-specific transformers like my LEGAL-BERT model with RAG pipel
                 >
                   LEGAL-BERT
                 </a>{" "}
-                model, and shipping production-grade apps with Docker & CI/CD.
+                — a fine-tuned legal-domain language model — openly for researchers and practitioners.
               </p>
             </div>
 
