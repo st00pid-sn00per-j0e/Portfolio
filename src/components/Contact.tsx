@@ -10,7 +10,7 @@ import { TextManager } from "@/components/animations/TextManager";
 
 const contacts = [
   { icon: Mail, label: "Email", value: "billyxkhan98@gmail.com", href: "mailto:billyxkhan98@gmail.com" },
-{ icon: Phone, label: "Phone", value: "+92 319241837", href: "tel:+92319241837" },
+{ icon: Phone, label: "Phone", value: "+92 3192418837", href: "tel:+923192418837" },
   { icon: MapPin, label: "Location", value: "Karachi, Pakistan" }
 ];
 

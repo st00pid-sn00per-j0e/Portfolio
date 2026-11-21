@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useParallaxLayer } from "@/hooks/useParallax";
 import { ScrambleText } from "@/components/animations/ScrambleText";
 import { TextManager } from "@/components/animations/TextManager";
-import heroBack  from "@/assets/Generated Image April 19, 2026 - 12_28AM.png?hero";
-import heroMid   from "@/assets/Generated Image April 19, 2026 - 12_29AM.png?hero";
-import heroFront from "@/assets/Generated_Image_April_18__2026_-_11_29PM-removebg-preview.png?hero=alpha";
+import heroBack from "@/assets/Generated Image April 19, 2026 - 12_28AM.png";
+import heroMid from "@/assets/Generated Image April 19, 2026 - 12_29AM.png";
+import heroFront from "@/assets/Generated_Image_April_18__2026_-_11_29PM-removebg-preview.png";
 const ROLES = [
   "Software Developer",
   "AI Agent Engineer",
@@ -60,7 +60,7 @@ export function Hero() {
       {/* Back layer */}
       <div ref={backLayer as React.RefObject<HTMLDivElement>} className="parallax-layer absolute inset-0 z-10">
         <img
-          src={heroBack.img.src}       // ← was src={heroBack}
+          src={heroBack}
           alt=""
           fetchPriority="high"
           decoding="async"
@@ -71,7 +71,7 @@ export function Hero() {
       {/* Middle layer */}
       <div ref={midLayer as React.RefObject<HTMLDivElement>} className="parallax-layer absolute inset-0 z-20">
         <img
-          src={heroMid.img.src}        // ← was src={heroMid}
+          src={heroMid}
           alt=""
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover opacity-80"
@@ -81,7 +81,7 @@ export function Hero() {
       {/* Front layer */}
       <div ref={frontLayer as React.RefObject<HTMLDivElement>} className="parallax-layer absolute inset-0 z-30">
         <img
-          src={heroFront.img.src}       // ← was src={heroFront}
+          src={heroFront}
           alt=""
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover opacity-100"
